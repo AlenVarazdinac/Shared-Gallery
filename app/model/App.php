@@ -38,9 +38,10 @@ final class App
 
     /**
      * Loads app config
-     * @return array
+     * @return mixed
      */
-    public static function config(){
-        return include BASEPATH . 'app/config.php';
+    public static function config($key){
+        $config = include BASEPATH . 'app/config.php';
+        return $config[$key];
     }
 }
