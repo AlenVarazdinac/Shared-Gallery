@@ -9,8 +9,10 @@ class Session
     }
 
     // Logs user in
-    public function login(){
-
+    public function login($data){
+        $_SESSION['username'] = $data['username'];
+        $_SESSION['email'] = $data['email'];
+        header('Location: ' . App::config('url') . 'account');
     }
 
     // Logs user out

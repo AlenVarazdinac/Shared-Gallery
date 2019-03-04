@@ -8,6 +8,29 @@ class UserController
         $view->render('user/login');
     }
 
+    public function authorization(){
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+
+        // Connect to database
+        $connection = App::connect();
+
+        $sql = 'SELECT * FROM users WHERE email=:email';
+        $stmt = $connection->prepare($sql);
+        $stmt->bindParam('email', $email);
+        $stmt->execute();
+
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if(password_verify($password, $user['password'])){
+            echo "password is correct";
+            $data = ['username' => $user['username'], 'email' => $user['password']];
+            Session::login($data);
+        }else{
+            header('Location: ' . App::config('url') . 'user/login?tryagain');
+        }
+    }
+
     // Display register form
     public function register(){
         $view = new View();
