@@ -16,17 +16,65 @@ class UserController
 
     // Register user
     public function registration(){
-        $connection = App::connect();
+        // Validate $_POST data
+        $data = $this->_validateRegistration($_POST);
 
-        $sql = 'INSERT INTO users (username, email, password)
-        VALUES (:username, :email, :password)';
+        // If validate data is wrong redirect back to register page
+        if($data === false){
+            header('Location: ' . App::config('url') . 'user/register?tryagain');
+        }else{
+            // Connect to database
+            $connection = App::connect();
 
-        $stmt = $connection->prepare($sql);
-        $stmt->bindParam('username', $_POST['username']);
-        $stmt->bindParam('email', $_POST['email']);
-        $stmt->bindParam('password', $_POST['password']);
-        $stmt->execute();
+            $sql = 'INSERT INTO users (username, email, password)
+            VALUES (:username, :email, :password)';
 
-        header('Location: ' . App::config('url'). 'user/login?succreg');
+            $stmt = $connection->prepare($sql);
+            $stmt->bindParam('username', $data['username']);
+            $stmt->bindParam('email', $data['email']);
+            $stmt->bindParam('password', password_hash($data['password'], PASSWORD_ARGON2I));
+            $stmt->execute();
+
+            // If successfully registered, redirect user to login page
+            header('Location: ' . App::config('url'). 'user/login?succreg');
+        }
+
     }
+
+    /**
+     * Validate registration
+     * @param $data
+     * @return array|bool
+     */
+    public function _validateRegistration($data){
+        $required = ['username', 'email', 'password', 'confirmPassword'];
+
+        $data = array_diff_key($data, $required);
+
+        // Validate required keys
+        foreach($required as $key){
+            if(!isset($data[$key])) {
+                return false;
+            }
+
+            // Trim whitespaces then check if empty
+            $data[$key] = trim((string)$data[$key]);
+            if(empty($data[$key])){
+                return false;
+            }
+        }
+
+        // Check if email is valid
+        if(!filter_var($data['email'], FILTER_VALIDATE_EMAIL)){
+            return false;
+        }
+
+        // Check if passwords match
+        if($data['password'] !== $data['confirmPassword']){
+            return false;
+        }
+
+        return $data;
+    }
+
 }
