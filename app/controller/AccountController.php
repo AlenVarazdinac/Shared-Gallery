@@ -4,7 +4,11 @@ class AccountController
 {
     // Display login form
     public function index(){
-        echo "Hello";
+        if(!Session::getInstance()->isLoggedIn()){
+            echo "User is not logged in";
+        }else{
+            echo "User is logged in";
+        }
         // $view = new View();
         // $view->render('user/login');
     }

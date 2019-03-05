@@ -20,12 +20,13 @@ class UserController
         $stmt->bindParam('email', $email);
         $stmt->execute();
 
+        // Store user from db
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
+        // Verify submitted and db passwords
         if(password_verify($password, $user['password'])){
-            echo "password is correct";
-            $data = ['username' => $user['username'], 'email' => $user['password']];
-            Session::login($data);
+            Session::getInstance()->login();
+            header('Location: ' . App::config('url') . 'account');
         }else{
             header('Location: ' . App::config('url') . 'user/login?tryagain');
         }
