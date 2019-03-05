@@ -20,7 +20,7 @@
 
                 <!-- Repeat new password -->
                 <div class="form-group">
-                    <label for="repeatPassword">Password</label>
+                    <label for="repeatPassword">Repeat password</label>
                     <input type="password" class="form-control" id="repeatPassword"
                     name="repeatPassword" placeholder="Repeat new password" value="">
                 </div>
