@@ -24,12 +24,21 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="<?php echo App::config('url'); ?>">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<?php echo App::config('url'); ?>user/login">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<?php echo App::config('url'); ?>user/register">Register</a>
-                </li>
+                <?php if(!Session::getInstance()->isLoggedIn()): ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?php echo App::config('url'); ?>user/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?php echo App::config('url'); ?>user/register">Register</a>
+                    </li>
+                <?php else: ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?php echo App::config('url'); ?>account/edit">My Account</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?php echo App::config('url'); ?>user/logout">Logout</a>
+                    </li>
+                <?php endif; ?>
                 </ul>
             </div>
         </div>

@@ -15,7 +15,7 @@ class Session
 
     // Logs user out
     public function logout(){
-        $_SESSION['is_logged_in'] = false;
+        unset($_SESSION['is_logged_in']);
     }
 
     // Checks if user is logged in

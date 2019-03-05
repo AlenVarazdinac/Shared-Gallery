@@ -32,6 +32,11 @@ class UserController
         }
     }
 
+    public function logout(){
+        Session::getInstance()->logout();
+        header('Location: ' . App::config('url'));
+    }
+
     // Display register form
     public function register(){
         $view = new View();
