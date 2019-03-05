@@ -9,13 +9,21 @@ class Session
     }
 
     // Logs user in
-    public function login(){
+    public function login($data){
         $_SESSION['is_logged_in'] = true;
+        $_SESSION['user'] = $data;
+    }
+
+    // Gets user's data
+    public function getData(){
+        $data = isset($_SESSION['user']) ? $data = $_SESSION['user'] : '';
+        return $data;
     }
 
     // Logs user out
     public function logout(){
         unset($_SESSION['is_logged_in']);
+        unset($_SESSION['user']);
     }
 
     // Checks if user is logged in

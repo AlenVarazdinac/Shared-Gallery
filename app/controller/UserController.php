@@ -25,8 +25,13 @@ class UserController
 
         // Verify submitted and db passwords
         if(password_verify($password, $user['password'])){
-            Session::getInstance()->login();
-            header('Location: ' . App::config('url') . 'account');
+            $data = [
+                'id' => $user['id'],
+                'username' => $user['username'],
+                'email' => $user['email']
+            ];
+            Session::getInstance()->login($data);
+            header('Location: ' . App::config('url') . 'gallery');
         }else{
             header('Location: ' . App::config('url') . 'user/login?tryagain');
         }

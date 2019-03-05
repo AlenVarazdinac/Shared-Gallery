@@ -33,7 +33,10 @@
                     </li>
                 <?php else: ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo App::config('url'); ?>account/edit">My Account</a>
+                        <a class="nav-link" href="<?php echo App::config('url'); ?>gallery/index">Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?php echo App::config('url'); ?>account/index">My Account</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<?php echo App::config('url'); ?>user/logout">Logout</a>
