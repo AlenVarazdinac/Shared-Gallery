@@ -31,6 +31,12 @@ class UserController
                 'email' => $user['email']
             ];
             Session::getInstance()->login($data);
+
+            // Remember me cookie
+            if($_POST['rememberMe'] == 'true'){
+                // Set cookie
+                Cookie::getInstance()->rememberMe($data);
+            }
             header('Location: ' . App::config('url') . 'gallery');
         }else{
             header('Location: ' . App::config('url') . 'user/login?tryagain');
@@ -39,6 +45,7 @@ class UserController
 
     public function logout(){
         Session::getInstance()->logout();
+        Cookie::getInstance()->logout();
         header('Location: ' . App::config('url'));
     }
 
