@@ -32,6 +32,10 @@
 
             <!-- Register button -->
             <button type="submit" class="btn btn-primary">Register</button>
+
+            <!-- Link to login -->
+            <p class="mt-4">Already have an account? <a href="<?php echo App::config('url');?>user/login">Login</a></p>
+
         </form>
     </div>
 </div>
