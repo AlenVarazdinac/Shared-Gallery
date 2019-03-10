@@ -7,8 +7,22 @@ class GalleryController
         if(!Session::getInstance()->isLoggedIn()){
             header('Location: ' . App::config('url') . 'user/login?loginpls');
         }else{
+            // User's gallery directories
+            $directories = array_slice(scandir('public/gallery_images/'), 2);
+            $images = array();
+
+            foreach ($directories as $directory) {
+                // "Open" image directory
+                $imgDirectory = "public/gallery_images/" . $directory;
+                // Get images
+                $imagePath = glob($imgDirectory . '/*.jpg');
+                // Store images in array
+                $images = array_merge($images, $imagePath);
+            }
+
+            // Render view with images
             $view = new View();
-            $view->render('gallery/index');
+            $view->render('gallery/index', ['images' => $images]);
         }
     }
 

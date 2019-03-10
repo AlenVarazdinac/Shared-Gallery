@@ -17,4 +17,13 @@
             </div>
         </form>
     </div>
+    <!-- Image upload end -->
+
+    <!-- Gallery -->
+    <div class="row mt-5">
+        <?php foreach($images as $image): ?>
+            <img src="<?php echo App::config('url') . $image;?>" />
+        <?php endforeach;?>
+    </div>
+    <!-- Gallery end -->
 </div>

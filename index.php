@@ -19,5 +19,8 @@ spl_autoload_register(function($class){
     return include $classPath;
 });
 
+// Login user automatically if 'Remember me' is set
+Cookie::getInstance()->rememberMeData();
+
 // Start app
 App::start();

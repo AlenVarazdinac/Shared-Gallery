@@ -1,6 +1,4 @@
-<?php
-    Cookie::getInstance()->rememberMeData();
-?>
+
 <div class="container">
     <div class="row d-flex justify-content-center align-items-center" style="height: 75vh;">
         <form action="<?php echo App::config('url');?>user/authorization"
