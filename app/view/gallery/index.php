@@ -31,9 +31,11 @@
                         <li class="list-group-item"><?php echo $image['user']['username'];?></li>
                         <li class="list-group-item"><?php echo $image['user']['email'];?></li>
                     </ul>
+                    <?php if($image['user']['id'] === Session::getInstance()->getData()['id']):?>
                     <div class="card-body">
                         <a href="<?php echo App::config('url') . 'gallery/remove/' . $imgLink;?>" class="card-link">Remove</a>
                     </div>
+                    <?php endif;?>
                 </div>
             <?php endforeach;?>
         <?php endforeach;?>
