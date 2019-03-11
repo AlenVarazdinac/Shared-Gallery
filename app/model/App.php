@@ -27,10 +27,18 @@ final class App
             $action = strtolower($pathParts[1]);
         }
 
+        if(isset($pathParts[2]) || empty($pathParts[2])){
+            unset($pathParts[0]);
+            unset($pathParts[1]);
+            $data = array_values($pathParts);
+        }else{
+            $data = '';
+        }
+
         // Dispatch
         if(class_exists($controller) && method_exists($controller, $action)){
             $controllerInstance = new $controller();
-            $controllerInstance->$action();
+            $controllerInstance->$action($data);
         }else{
             header("HTTP/1.0 404 Not Found");
         }
