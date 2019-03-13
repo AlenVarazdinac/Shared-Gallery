@@ -99,13 +99,33 @@ class AccountController
             $stmt->bindParam('email', $user['email']);
             $stmt->execute();
 
+            // Remove user's images
+            $directory = 'public/gallery_images/' . $user['id'];
+            $this->deleteDirectory($directory);
+
             // Unset session
             Session::getInstance()->logout();
+            // Delete cookies
+            Cookie::getInstance()->logout();
 
             // Redirect to home page
             header('Location: ' . App::config('url') . '?accdeleted');
         }
     }
 
+    // Delete user's gallery
+    function deleteDirectory($dir) {
+        // Iterate through files
+        foreach (glob($dir) as $file) {
+            if (is_dir($file)) {
+                // Remove directory once empty
+                self::deleteDirectory("$file/*");
+                rmdir($file);
+            } else {
+                // Remove if file
+                unlink($file);
+            }
+        }
+    }
 
 }
