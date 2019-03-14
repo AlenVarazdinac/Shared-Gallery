@@ -7,14 +7,14 @@
             <div class="form-group">
                 <label for="email">Email address</label>
                 <input type="email" class="form-control" id="email"
-                name="email" placeholder="Enter email" value="">
+                name="email" placeholder="Enter email" value="" required>
             </div>
 
             <!-- Password -->
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" class="form-control" id="password"
-                name="password" placeholder="Password" value="">
+                name="password" placeholder="Password" value="" required>
             </div>
 
             <!-- Remember me -->

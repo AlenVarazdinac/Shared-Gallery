@@ -6,28 +6,28 @@
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" class="form-control" id="username"
-                name="username" placeholder="Enter username" value="">
+                name="username" placeholder="Enter username" value="" required>
             </div>
 
             <!-- Email -->
             <div class="form-group">
                 <label for="email">Email address</label>
                 <input type="email" class="form-control" id="email"
-                name="email" placeholder="Enter email" value="">
+                name="email" placeholder="Enter email" value="" required>
             </div>
 
             <!-- Password -->
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" class="form-control" id="password"
-                name="password" placeholder="Password" value="">
+                name="password" placeholder="Password" value="" required>
             </div>
 
             <!-- Confirm Password -->
             <div class="form-group">
                 <label for="confirmPassword">Confirm Password</label>
                 <input type="password" class="form-control" id="confirmPassword"
-                name="confirmPassword" placeholder="Password" value="">
+                name="confirmPassword" placeholder="Password" value="" required>
             </div>
 
             <!-- Register button -->

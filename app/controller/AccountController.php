@@ -35,6 +35,7 @@ class AccountController
             // Store user from DB
             $dbUser = $stmt->fetch(PDO::FETCH_ASSOC);
 
+            // If current user's password and current given password match then change password
             if(password_verify($data['currentPassword'], $dbUser['password'])){
                 $sql = 'UPDATE users SET password=:password WHERE id=:id AND email=:email';
 
@@ -44,11 +45,14 @@ class AccountController
                 $stmt->bindParam('email', $dbUser['email']);
                 $stmt->execute();
 
-                // Unset session
+                // Unset session & Cookie
                 Session::getInstance()->logout();
+                Cookie::getInstance()->logout();
 
                 // Redirect to home page
-                header('Location: ' . App::config('url') . '?pwchanged');
+                header('Location: ' . App::config('url') . 'user/login?pwchanged');
+            }else{
+                header('Location: ' . App::config('url') . 'account/index?tryagain');
             }
         }
     }
@@ -72,6 +76,8 @@ class AccountController
             if(empty($data[$key])){
                 return false;
             }
+
+            $data[$key] = htmlspecialchars($data[$key], ENT_QUOTES);
         }
 
         // Check if passwords match

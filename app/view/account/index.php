@@ -8,21 +8,21 @@
                 <div class="form-group">
                     <label for="currentPassword">Current password</label>
                     <input type="password" class="form-control" id="currentPassword"
-                    name="currentPassword" placeholder="Enter current password" value="">
+                    name="currentPassword" placeholder="Enter current password" value="" required>
                 </div>
 
                 <!-- New password -->
                 <div class="form-group">
                     <label for="newPassword">New password</label>
                     <input type="password" class="form-control" id="newPassword"
-                    name="newPassword" placeholder="New password" value="">
+                    name="newPassword" placeholder="New password" value="" required>
                 </div>
 
                 <!-- Repeat new password -->
                 <div class="form-group">
                     <label for="repeatPassword">Repeat password</label>
                     <input type="password" class="form-control" id="repeatPassword"
-                    name="repeatPassword" placeholder="Repeat new password" value="">
+                    name="repeatPassword" placeholder="Repeat new password" value="" required>
                 </div>
 
                 <!-- Login button -->

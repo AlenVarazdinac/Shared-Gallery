@@ -9,33 +9,32 @@ class UserController
     }
 
     public function authorization(){
-        $email = $_POST['email'];
-        $password = $_POST['password'];
+        $data = $this->_validateLogin($_POST);
 
         // Connect to database
         $connection = App::connect();
 
         $sql = 'SELECT * FROM users WHERE email=:email';
         $stmt = $connection->prepare($sql);
-        $stmt->bindParam('email', $email);
+        $stmt->bindParam('email', $data['email']);
         $stmt->execute();
 
         // Store user from db
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         // Verify submitted and db passwords
-        if(password_verify($password, $user['password'])){
-            $data = [
+        if(password_verify($data['password'], $user['password'])){
+            $userData = [
                 'id' => $user['id'],
                 'username' => $user['username'],
                 'email' => $user['email']
             ];
-            Session::getInstance()->login($data);
+            Session::getInstance()->login($userData);
 
             // Remember me cookie
             if($_POST['rememberMe'] == 'true'){
                 // Set cookie
-                Cookie::getInstance()->rememberMe($data);
+                Cookie::getInstance()->rememberMe($userData);
             }
             header('Location: ' . App::config('url') . 'gallery');
         }else{
@@ -83,6 +82,40 @@ class UserController
     }
 
     /**
+     * Validate login
+     * @param $data
+     * @return array|bool
+     */
+    public function _validateLogin($data){
+        $required = ['email', 'password'];
+
+        $data = array_diff_key($data, $required);
+
+        // Validate required keys
+        foreach($required as $key){
+            if(!isset($data[$key])) {
+                return false;
+            }
+
+            // Trim whitespaces then check if empty
+            $data[$key] = trim((string)$data[$key]);
+            if(empty($data[$key])){
+                return false;
+            }
+
+            $data[$key] = htmlspecialchars($data[$key], ENT_QUOTES);
+        }
+
+        // Check if email is valid
+        if(!filter_var($data['email'], FILTER_VALIDATE_EMAIL)){
+            return false;
+        }
+
+        return $data;
+    }
+
+
+    /**
      * Validate registration
      * @param $data
      * @return array|bool
@@ -103,6 +136,8 @@ class UserController
             if(empty($data[$key])){
                 return false;
             }
+
+            $data[$key] = htmlspecialchars($data[$key], ENT_QUOTES);
         }
 
         // Check if email is valid
