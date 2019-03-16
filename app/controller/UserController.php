@@ -59,6 +59,21 @@ class UserController
         // Validate $_POST data
         $data = $this->_validateRegistration($_POST);
 
+        // Connect to database for unique email
+        $connection = App::connect();
+        $sql = 'SELECT email FROM users';
+        $stmt = $connection->prepare($sql);
+        $stmt->execute();
+        // Get emails from DB
+        $emails = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // If given email matches with any in DB return false
+        foreach($emails as $email){
+            if($email['email'] === $data['email']){
+                $data = false;
+            }
+        }
+
         // If validate data is wrong redirect back to register page
         if($data === false){
             header('Location: ' . App::config('url') . 'user/register?tryagain');
