@@ -136,4 +136,36 @@ class GalleryController
 
         return true;
     }
+
+    // Count images for Home page
+    function count(){
+        // Gallery path
+        $directory = 'public/gallery_images/';
+        // Counter
+        $filesCounted = 0;
+
+        // Connect to database to get user IDs
+        $connection = App::connect();
+        $sql = 'SELECT id FROM users';
+        $stmt = $connection->prepare($sql);
+        $stmt->execute();
+
+        // Fetch user ids
+        $userIds = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Iterate through user's directories and count images
+        foreach ($userIds as $userId) {
+            // Check if directory exists
+            if(!file_exists($directory . $userId['id'])){
+                continue;
+            }
+
+            // Count images
+            $fileIterator = new FilesystemIterator($directory . $userId['id'], FilesystemIterator::SKIP_DOTS);
+            $filesCounted += iterator_count($fileIterator);
+        }
+
+        // Return count message
+        echo $filesCounted;
+    }
 }

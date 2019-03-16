@@ -10,6 +10,17 @@
     <link rel="stylesheet"
     href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Style for images counter -->
+    <style>
+        #images-count-text{
+            visibility: hidden;
+            font-size: 2rem;
+        }
+        .toggle-count{
+            visibility: visible !important;
+        }
+    </style>
 </head>
 <body>
     <!-- Navbar -->
@@ -63,5 +74,25 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
+
+    <script>
+        // Script that counts total images in gallery
+        function countImages(){
+            var xhttp = new XMLHttpRequest();
+
+            xhttp.onreadystatechange = function() {
+                if(this.readyState == 4 && this.status == 200){
+                    // Toggle class to count text
+                    document.getElementById('images-count-text').classList.toggle('toggle-count');
+                    // Set text to response msg
+                    document.getElementById('images-number').innerHTML = this.responseText;
+                }
+            };
+
+            // Async Get Request
+            xhttp.open("GET", "gallery/count", true);
+            xhttp.send();
+        }
+    </script>
 </body>
 </html>
