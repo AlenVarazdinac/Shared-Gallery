@@ -1,5 +1,15 @@
 <div class="container">
-    <div class="row d-flex justify-content-center align-items-center" style="height: 75vh;">
+
+    <?php // Wrong input...
+    if(isset($_GET['tryagain'])): ?>
+    <div class="row d-flex justify-content-center">
+        <div class="col-12 col-md-6 align-middle alert alert-danger mt-5">
+            <p class="text-center">Something went wrong, try again.</p>
+        </div>
+    </div>
+    <?php endif;?>
+
+    <div class="row d-flex justify-content-center align-items-center" style="height: 50vh;">
         <form action="<?php echo App::config('url');?>user/registration"
         method="post" class="col-12 col-md-4">
             <!-- Username -->

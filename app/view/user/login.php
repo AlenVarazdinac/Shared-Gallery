@@ -1,6 +1,36 @@
 
 <div class="container">
-    <div class="row d-flex justify-content-center align-items-center" style="height: 75vh;">
+
+    <?php // You have to be logged in...
+    if(isset($_GET['loginpls'])): ?>
+    <div class="row d-flex justify-content-center">
+        <div class="col-12 col-md-6 align-middle alert alert-danger mt-5">
+            <p class="text-center">Log in first.</p>
+        </div>
+    </div>
+    <?php endif;?>
+
+    <?php // Successfully registered...
+    if(isset($_GET['succreg'])): ?>
+    <div class="row d-flex justify-content-center">
+        <div class="col-12 col-md-6 align-middle alert alert-success mt-5">
+            <p class="text-center">Successfully registered. You can log in now.</p>
+        </div>
+    </div>
+    <?php endif;?>
+
+    <?php // Password changed...
+    if(isset($_GET['pwchanged'])): ?>
+    <div class="row d-flex justify-content-center">
+        <div class="col-12 col-md-6 align-middle alert alert-success mt-5">
+            <p class="text-center">Password changed. Log in using your new password.</p>
+        </div>
+    </div>
+    <?php endif;?>
+
+
+    <div class="row d-flex justify-content-center align-items-center" style="height: 50vh;">
+
         <form action="<?php echo App::config('url');?>user/authorization"
         method="post" class="col-12 col-md-4">
             <!-- Email -->

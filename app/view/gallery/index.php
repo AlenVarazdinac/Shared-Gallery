@@ -1,4 +1,41 @@
 <div class="container">
+
+    <?php // Successful upload...
+    if(isset($_GET['succupload'])): ?>
+    <div class="row d-flex justify-content-center">
+        <div class="col-12 col-md-6 align-middle alert alert-success mt-5">
+            <p class="text-center">Image uploaded.</p>
+        </div>
+    </div>
+    <?php endif;?>
+
+    <?php // Successful delete...
+    if(isset($_GET['succdelete'])): ?>
+    <div class="row d-flex justify-content-center">
+        <div class="col-12 col-md-6 align-middle alert alert-success mt-5">
+            <p class="text-center">Image deleted.</p>
+        </div>
+    </div>
+    <?php endif;?>
+
+    <?php // Something went wrong...
+    if(isset($_GET['tryagain'])): ?>
+    <div class="row d-flex justify-content-center">
+        <div class="col-12 col-md-6 align-middle alert alert-danger mt-5">
+            <p class="text-center">Something went wrong. Try again.</p>
+        </div>
+    </div>
+    <?php endif;?>
+
+    <?php // Image does not exist...
+    if(isset($_GET['notexist'])): ?>
+    <div class="row d-flex justify-content-center">
+        <div class="col-12 col-md-6 align-middle alert alert-danger mt-5">
+            <p class="text-center">Image does not exist.</p>
+        </div>
+    </div>
+    <?php endif;?>
+
     <!-- Image upload -->
     <div class="row mt-5">
         <form action="<?php echo App::config('url');?>gallery/upload" method="post" enctype="multipart/form-data">

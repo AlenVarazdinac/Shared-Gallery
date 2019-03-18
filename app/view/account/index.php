@@ -1,5 +1,15 @@
 <div class="container">
-    <div class="row d-flex justify-content-center align-items-center" style="height: 75vh;">
+
+    <?php // Something went wrong...
+    if(isset($_GET['tryagain'])): ?>
+    <div class="row d-flex justify-content-center">
+        <div class="col-12 col-md-6 align-middle alert alert-danger mt-5">
+            <p class="text-center">Something went wrong. Try again.</p>
+        </div>
+    </div>
+    <?php endif;?>
+
+    <div class="row d-flex justify-content-center align-items-center" style="height: 50vh;">
         <!-- Change password form -->
         <div class="col-12 col-md-6">
             <form action="<?php echo App::config('url');?>account/pwchange"
