@@ -37,7 +37,7 @@
     <?php endif;?>
 
     <!-- Image upload -->
-    <div class="row mt-5">
+    <div class="row mt-5 d-flex justify-content-center">
         <form action="<?php echo App::config('url');?>gallery/upload" method="post" enctype="multipart/form-data">
             <div class="input-group">
                 <div class="custom-file">
@@ -54,7 +54,7 @@
     <!-- Image upload end -->
 
     <!-- Gallery -->
-    <div class="row mt-5">
+    <div class="row mt-5 d-flex justify-content-center">
         <?php foreach($images as $image): ?>
             <?php foreach($image['images'] as $imagePath):?>
                 <?php
@@ -62,8 +62,9 @@
                 $imgLink = strstr($imgLink, $image['user']['id']);
                 ?>
 
-                <div class="card" style="width: 18rem;">
-                    <img src="<?php echo App::config('url') . $imagePath;?>" class="card-img-top" alt="...">
+                <div class="card m-2" style="width: 18rem;">
+                    <img src="<?php echo App::config('url') . $imagePath;?>"
+                    class="card-img-top" style="height: 26rem;" alt="<?php echo $image['user']['username'];?> image">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item"><?php echo $image['user']['username'];?></li>
                         <li class="list-group-item"><?php echo $image['user']['email'];?></li>
