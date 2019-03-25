@@ -11,3 +11,10 @@ CREATE TABLE IF NOT EXISTS `users`(
     `remember_me`         CHAR(25),
     UNIQUE KEY `email` (`email`)
 );
+
+CREATE TABLE IF NOT EXISTS `images`(
+    `id`                  INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `uploaded_by`         INT NOT NULL,
+    `name`                VARCHAR(75) NOT NULL,
+    FOREIGN KEY (`uploaded_by`) REFERENCES `users`(`id`)
+);
