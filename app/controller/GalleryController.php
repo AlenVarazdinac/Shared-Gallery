@@ -7,36 +7,13 @@ class GalleryController
         if(!Session::getInstance()->isLoggedIn()){
             header('Location: ' . App::config('url') . 'user/login?loginpls');
         }else{
-            // User's gallery directories
-            $directories = array_slice(scandir('public/gallery_images/'), 2);
-            $images = array();
-            $users = array();
+            // Get images
+            $gallery = new Gallery();
+            $gallery = $gallery->showImages();
 
-            foreach ($directories as $directory) {
-                // Connect to database
-                $connection = App::connect();
-
-                $sql = 'SELECT id, username, email FROM users WHERE id=:id';
-                $stmt = $connection->prepare($sql);
-                $stmt->bindParam('id', $directory);
-                $stmt->execute();
-
-                // Fetch user
-                $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-                // "Open" image directory
-                $imgDirectory = "public/gallery_images/" . $directory;
-                // Get images
-                $imagePath = ['images' => glob($imgDirectory . '/*.jpg')];
-
-                // Store images in array
-                $images[$directory] = $imagePath;
-                // Store users in array
-                $images[$directory] += ['user' => $user];
-            }
             // Render view with images
             $view = new View();
-            $view->render('gallery/index', ['images' => $images, 'users' => $users]);
+            $view->render('gallery/index', ['images' => $gallery]);
         }
     }
 
@@ -98,17 +75,22 @@ class GalleryController
     // Remove image
     public function remove($data){
         $userId = $data[0];
-        $imageId = $data[1];
+        $imageName = $data[1];
+
+        $gallery = new Gallery($userId);
 
         if(!Session::getInstance()->isLoggedIn()){
             header('Location: ' . App::config('url') . 'user/login?loginpls');
         }else{
-            $image = 'public/gallery_images/' . $userId . '/' . $imageId . '.jpg';
+            $image = 'public/gallery_images/' . $userId . '/gallery_' . $imageName . '.jpg';
             $directory = 'public/gallery_images/' . $userId;
 
             // Delete image if exists
             if(file_exists($image)){
                 unlink($image);
+
+                // Delete from database
+                $gallery->dbDelete($userId, $imageName);
 
                 // Delete directory where image was if directory is empty
                 if($this->isDirectoryEmpty($directory)){

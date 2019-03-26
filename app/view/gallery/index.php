@@ -56,26 +56,19 @@
     <!-- Gallery -->
     <div class="row mt-5 d-flex justify-content-center">
         <?php foreach($images as $image): ?>
-            <?php foreach($image['images'] as $imagePath):?>
-                <?php
-                $imgLink = substr($imagePath, 0, strpos($imagePath, '.jpg'));
-                $imgLink = strstr($imgLink, $image['user']['id']);
-                ?>
-
-                <div class="card m-2" style="width: 18rem;">
-                    <img src="<?php echo App::config('url') . $imagePath;?>"
-                    class="card-img-top" style="height: 26rem;" alt="<?php echo $image['user']['username'];?> image">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><?php echo $image['user']['username'];?></li>
-                        <li class="list-group-item"><?php echo $image['user']['email'];?></li>
-                    </ul>
-                    <?php if($image['user']['id'] === Session::getInstance()->getData()['id']):?>
-                    <div class="card-body">
-                        <a href="<?php echo App::config('url') . 'gallery/remove/' . $imgLink;?>" class="card-link">Remove</a>
-                    </div>
-                    <?php endif;?>
+            <div class="card m-2" style="width: 18rem;">
+                <img src="<?php echo App::config('url') . 'public/gallery_images/' . $image['uploaded_by'] . '/gallery_' . $image['name'] . '.jpg';?>"
+                class="card-img-top" style="height: 26rem;" alt="<?php echo $image['username'];?> image">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><?php echo $image['username'];?></li>
+                    <li class="list-group-item"><?php echo $image['email'];?></li>
+                </ul>
+                <?php if($image['userid'] === Session::getInstance()->getData()['id']):?>
+                <div class="card-body">
+                    <a href="<?php echo App::config('url') . 'gallery/remove/' . $image['userid'] . '/' . $image['name'];?>" class="card-link">Remove</a>
                 </div>
-            <?php endforeach;?>
+                <?php endif;?>
+            </div>
         <?php endforeach;?>
     </div>
     <!-- Gallery end -->
