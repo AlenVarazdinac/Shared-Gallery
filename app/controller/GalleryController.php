@@ -58,9 +58,14 @@ class GalleryController
 
                 // Upload if image meets requirements
                 if($validImage){
+                    // Get current user data
                     $userData = Session::getInstance()->getData();
-                    $galleryPath = App::config('url') . 'public/gallery_images/';
-                    $id = 1;
+
+                    // Instance gallery
+                    $gallery = new Gallery($userData['id']);
+
+                    // Start Image ID
+                    $imageId = 1;
 
                     // Check if gallery folder exists for specified user
                     if(!file_exists('public/gallery_images/' . $userData['id'])){
@@ -68,16 +73,17 @@ class GalleryController
                     }
 
                     // Get latest image id
-                    $images = array_slice(scandir('public/gallery_images/'. $userData['id']), 2);
-                    if(!empty($images)){
-                        $lastImage = array_values(array_slice($images, -1))[0];
-                        preg_match('/\d/', $lastImage, $lastImageId);
-                        $id = $lastImageId[0] + 1;
+                    if(!empty($gallery->getLastImage())){
+                        $imageId = $gallery->getLastImage()['name'];
+                        $imageId++;
                     }
 
                     // Upload new image
                     move_uploaded_file($_FILES["fileUpload"]["tmp_name"],
-                    'public/gallery_images/' . $userData['id'] . '/gallery_' . $id . '.jpg');
+                    'public/gallery_images/' . $userData['id'] . '/gallery_' . $imageId . '.jpg');
+
+                    // Upload to Database
+                    $gallery->dbUpload($imageId);
 
                     // Redirect back to gallery
                     header('Location: ' . App::config('url') . 'gallery/index?succupload');
