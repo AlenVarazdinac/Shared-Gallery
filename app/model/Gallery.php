@@ -49,7 +49,7 @@ class Gallery extends Database{
     }
 
     // Get latest image
-    public function getLastImage(){
+    public function getLastImage($userId){
         // Connect to database
         $connection = Database::connect();
 
@@ -60,5 +60,19 @@ class Gallery extends Database{
 
         $image = $stmt->fetch(PDO::FETCH_ASSOC);
         return $image;
+    }
+
+    // Count images in database
+    public function countImages(){
+        // Connect to database
+        $connection = Database::connect();
+
+        $sql = 'SELECT COUNT(*) FROM images';
+        $stmt = $connection->prepare($sql);
+        $stmt->execute();
+
+        $imagesCounted = $stmt->fetchColumn();
+
+        return $imagesCounted;
     }
 }

@@ -39,7 +39,7 @@ class GalleryController
                     $userData = Session::getInstance()->getData();
 
                     // Instance gallery
-                    $gallery = new Gallery($userData['id']);
+                    $gallery = new Gallery();
 
                     // Start Image ID
                     $imageId = 1;
@@ -50,8 +50,8 @@ class GalleryController
                     }
 
                     // Get latest image id
-                    if(!empty($gallery->getLastImage())){
-                        $imageId = $gallery->getLastImage()['name'];
+                    if(!empty($gallery->getLastImage($userData['id']))){
+                        $imageId = $gallery->getLastImage($userData['id'])['name'];
                         $imageId++;
                     }
 
@@ -60,7 +60,7 @@ class GalleryController
                     'public/gallery_images/' . $userData['id'] . '/gallery_' . $imageId . '.jpg');
 
                     // Upload to Database
-                    $gallery->dbUpload($imageId);
+                    $gallery->dbUpload($userData['id'], $imageId);
 
                     // Redirect back to gallery
                     header('Location: ' . App::config('url') . 'gallery/index?succupload');
@@ -127,31 +127,10 @@ class GalleryController
 
     // Count images for Home page
     function count(){
-        // Gallery path
-        $directory = 'public/gallery_images/';
-        // Counter
         $filesCounted = 0;
 
-        // Connect to database to get user IDs
-        $connection = App::connect();
-        $sql = 'SELECT id FROM users';
-        $stmt = $connection->prepare($sql);
-        $stmt->execute();
-
-        // Fetch user ids
-        $userIds = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        // Iterate through user's directories and count images
-        foreach ($userIds as $userId) {
-            // Check if directory exists
-            if(!file_exists($directory . $userId['id'])){
-                continue;
-            }
-
-            // Count images
-            $fileIterator = new FilesystemIterator($directory . $userId['id'], FilesystemIterator::SKIP_DOTS);
-            $filesCounted += iterator_count($fileIterator);
-        }
+        $gallery = new Gallery();
+        $filesCounted = $gallery->countImages();
 
         // Return count message
         echo $filesCounted;
