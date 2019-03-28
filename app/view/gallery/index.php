@@ -1,5 +1,4 @@
 <div class="container">
-
     <?php // Successful upload...
     if(isset($_GET['succupload'])): ?>
     <div class="row d-flex justify-content-center">

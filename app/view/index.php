@@ -1,5 +1,4 @@
 <div class="container">
-
     <?php // Account deleted...
     if(isset($_GET['accdeleted'])): ?>
     <div class="row d-flex justify-content-center">

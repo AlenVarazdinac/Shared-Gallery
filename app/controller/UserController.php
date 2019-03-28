@@ -29,6 +29,7 @@ class UserController
                 'username' => $user['username'],
                 'email' => $user['email']
             ];
+
             Session::getInstance()->login($userData);
 
             // Remember me cookie

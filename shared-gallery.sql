@@ -8,7 +8,6 @@ CREATE TABLE IF NOT EXISTS `users`(
     `username`            VARCHAR(75) NOT NULL,
     `email`               VARCHAR(75) NOT NULL,
     `password`            VARCHAR(250) NOT NULL,
-    `remember_me`         CHAR(25),
     UNIQUE KEY `email` (`email`)
 );
 
