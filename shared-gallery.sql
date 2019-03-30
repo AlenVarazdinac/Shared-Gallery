@@ -16,4 +16,5 @@ CREATE TABLE IF NOT EXISTS `images`(
     `uploaded_by`         INT NOT NULL,
     `name`                INT NOT NULL,
     FOREIGN KEY (`uploaded_by`) REFERENCES `users`(`id`)
+    ON DELETE CASCADE
 );

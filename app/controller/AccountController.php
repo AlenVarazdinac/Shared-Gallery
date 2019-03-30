@@ -22,28 +22,12 @@ class AccountController
         if($data === false){
             header('Location: ' . App::config('url') . 'account/index?tryagain');
         }else{
-            // Get current password from database
-            $connection = App::connect();
-
-            $sql = 'SELECT * FROM users WHERE id=:id AND email=:email';
-
-            $stmt = $connection->prepare($sql);
-            $stmt->bindParam('id', $user['id']);
-            $stmt->bindParam('email', $user['email']);
-            $stmt->execute();
-
-            // Store user from DB
-            $dbUser = $stmt->fetch(PDO::FETCH_ASSOC);
+            $account = new Account();
+            $getPassword = $account->getPassword($user);
 
             // If current user's password and current given password match then change password
-            if(password_verify($data['currentPassword'], $dbUser['password'])){
-                $sql = 'UPDATE users SET password=:password WHERE id=:id AND email=:email';
-
-                $stmt = $connection->prepare($sql);
-                $stmt->bindParam('password', password_hash($data['newPassword'], PASSWORD_ARGON2I));
-                $stmt->bindParam('id', $dbUser['id']);
-                $stmt->bindParam('email', $dbUser['email']);
-                $stmt->execute();
+            if(password_verify($data['currentPassword'], $getPassword['password'])){
+                $newPassword = $account->changePassword($data, $getPassword);
 
                 // Unset session & Cookie
                 Session::getInstance()->logout();
@@ -96,14 +80,8 @@ class AccountController
             // Get user's data from Session
             $user = Session::getInstance()->getData();
 
-            // Connect to database
-            $connection = App::connect();
-
-            $sql = 'DELETE FROM users WHERE id=:id AND email=:email';
-            $stmt = $connection->prepare($sql);
-            $stmt->bindParam('id', $user['id']);
-            $stmt->bindParam('email', $user['email']);
-            $stmt->execute();
+            $account = new Account();
+            $account->deleteAccount($user);
 
             // Remove user's images
             $directory = 'public/gallery_images/' . $user['id'];

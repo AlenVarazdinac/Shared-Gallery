@@ -77,7 +77,7 @@ class GalleryController
         $userId = $data[0];
         $imageName = $data[1];
 
-        $gallery = new Gallery($userId);
+        $gallery = new Gallery();
 
         if(!Session::getInstance()->isLoggedIn()){
             header('Location: ' . App::config('url') . 'user/login?loginpls');

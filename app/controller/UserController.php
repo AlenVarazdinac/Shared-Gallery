@@ -11,16 +11,8 @@ class UserController
     public function authorization(){
         $data = $this->_validateLogin($_POST);
 
-        // Connect to database
-        $connection = App::connect();
-
-        $sql = 'SELECT * FROM users WHERE email=:email';
-        $stmt = $connection->prepare($sql);
-        $stmt->bindParam('email', $data['email']);
-        $stmt->execute();
-
-        // Store user from db
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        $user = new User();
+        $user = $user->login($data);
 
         // Verify submitted and db passwords
         if(password_verify($data['password'], $user['password'])){
@@ -60,13 +52,8 @@ class UserController
         // Validate $_POST data
         $data = $this->_validateRegistration($_POST);
 
-        // Connect to database for unique email
-        $connection = App::connect();
-        $sql = 'SELECT email FROM users';
-        $stmt = $connection->prepare($sql);
-        $stmt->execute();
-        // Get emails from DB
-        $emails = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $user = new User();
+        $emails = $user->getEmails();
 
         // If given email matches with any in DB return false
         foreach($emails as $email){
@@ -79,17 +66,8 @@ class UserController
         if($data === false){
             header('Location: ' . App::config('url') . 'user/register?tryagain');
         }else{
-            // Connect to database
-            $connection = App::connect();
-
-            $sql = 'INSERT INTO users (username, email, password)
-            VALUES (:username, :email, :password)';
-
-            $stmt = $connection->prepare($sql);
-            $stmt->bindParam('username', $data['username']);
-            $stmt->bindParam('email', $data['email']);
-            $stmt->bindParam('password', password_hash($data['password'], PASSWORD_ARGON2I));
-            $stmt->execute();
+            // Register user
+            $user->register($data);
 
             // If successfully registered, redirect user to login page
             header('Location: ' . App::config('url'). 'user/login?succreg');
