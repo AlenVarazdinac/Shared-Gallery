@@ -5,6 +5,7 @@ class User extends Database{
     private $connection;
 
     function __construct(){
+        $this->connection = parent::__construct();
         $this->connection = $this->connect();
     }
 

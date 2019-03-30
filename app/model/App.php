@@ -57,19 +57,19 @@ final class App
      * Database connection
      * @return PDO|bool
      */
-    public static function connect(){
-        $dbName = App::config('db_name');
-        $dbUser = App::config('db_user');
-        $dbPassword = App::config('db_password');
+    // public static function connect(){
+    //     $dbName = App::config('db_name');
+    //     $dbUser = App::config('db_user');
+    //     $dbPassword = App::config('db_password');
 
-        $dsn = "mysql:host=localhost;dbname=$dbName;charset=utf8";
+    //     $dsn = "mysql:host=localhost;dbname=$dbName;charset=utf8";
 
-        try{
-            $conn = new PDO($dsn, $dbUser, $dbPassword);
-        }catch(PDOException $e){
-            return false;
-        }
+    //     try{
+    //         $conn = new PDO($dsn, $dbUser, $dbPassword);
+    //     }catch(PDOException $e){
+    //         return false;
+    //     }
 
-        return $conn;
-    }
+    //     return $conn;
+    // }
 }
