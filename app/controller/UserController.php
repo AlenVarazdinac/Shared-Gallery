@@ -29,16 +29,16 @@ class UserController
                 // Set cookie
                 Cookie::getInstance()->rememberMe($userData);
             }
-            header('Location: ' . App::config('url') . 'gallery');
+            RedirectController::redirectTo('gallery');
         }else{
-            header('Location: ' . App::config('url') . 'user/login?tryagain');
+            RedirectController::redirectTo('user/login?tryagain');
         }
     }
 
     public function logout(){
         Session::getInstance()->logout();
         Cookie::getInstance()->logout();
-        header('Location: ' . App::config('url'));
+        RedirectController::redirectTo();
     }
 
     // Display register form
@@ -64,13 +64,13 @@ class UserController
 
         // If validate data is wrong redirect back to register page
         if($data === false){
-            header('Location: ' . App::config('url') . 'user/register?tryagain');
+            RedirectController::redirectTo('user/register?tryagain');
         }else{
             // Register user
             $user->register($data);
 
             // If successfully registered, redirect user to login page
-            header('Location: ' . App::config('url'). 'user/login?succreg');
+            RedirectController::redirectTo('user/login?succreg');
         }
 
     }

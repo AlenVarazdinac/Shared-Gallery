@@ -5,7 +5,7 @@ class GalleryController
     // Display gallery
     public function index(){
         if(!Session::getInstance()->isLoggedIn()){
-            header('Location: ' . App::config('url') . 'user/login?loginpls');
+            RedirectController::redirectTo('user/login?loginpls');
         }else{
             // Get images
             $gallery = new Gallery();
@@ -21,7 +21,7 @@ class GalleryController
     public function upload(){
         $validImage = true;
         if(!Session::getInstance()->isLoggedIn()){
-            header('Location: ' . App::config('url') . 'user/login?loginpls');
+            RedirectController::redirectTo('user/login?loginpls');
         }else{
             // If file is uploaded
             if(isset($_FILES["fileUpload"])) {
@@ -63,10 +63,10 @@ class GalleryController
                     $gallery->dbUpload($userData['id'], $imageId);
 
                     // Redirect back to gallery
-                    header('Location: ' . App::config('url') . 'gallery/index?succupload');
+                    RedirectController::redirectTo('gallery/index?succupload');
                 }else{
                     // Redirect back to gallery
-                    header('Location: ' . App::config('url') . 'gallery/index?tryagain');
+                    RedirectController::redirectTo('gallery/index?tryagain');
                 }
             }
         }
@@ -80,7 +80,7 @@ class GalleryController
         $gallery = new Gallery();
 
         if(!Session::getInstance()->isLoggedIn()){
-            header('Location: ' . App::config('url') . 'user/login?loginpls');
+            RedirectController::redirectTo('user/login?loginpls');
         }else{
             $image = 'public/gallery_images/' . $userId . '/gallery_' . $imageName . '.jpg';
             $directory = 'public/gallery_images/' . $userId;
@@ -98,9 +98,9 @@ class GalleryController
                 }
 
                 // Redirect back to gallery
-                header('Location: ' . App::config('url') . 'gallery/index?succdelete');
+                RedirectController::redirectTo('gallery/index?succdelete');
             }else{
-                header('Location: ' . App::config('url') . 'gallery/index?notexist');
+                RedirectController::redirectTo('gallery/index?notexist');
             }
         }
     }

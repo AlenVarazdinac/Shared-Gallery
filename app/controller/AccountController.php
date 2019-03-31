@@ -5,7 +5,7 @@ class AccountController
     // Display account options
     public function index(){
         if(!Session::getInstance()->isLoggedIn()){
-            header('Location: ' . App::config('url') . 'user/login?loginpls');
+            RedirectController::redirectTo('user/login?loginpls');
         }else{
             $view = new View();
             $view->render('account/index');
@@ -20,7 +20,7 @@ class AccountController
         $user = Session::getInstance()->getData();
 
         if($data === false){
-            header('Location: ' . App::config('url') . 'account/index?tryagain');
+            RedirectController::redirectTo('account/index?tryagain');
         }else{
             $account = new Account();
             $getPassword = $account->getPassword($user);
@@ -34,9 +34,9 @@ class AccountController
                 Cookie::getInstance()->logout();
 
                 // Redirect to home page
-                header('Location: ' . App::config('url') . 'user/login?pwchanged');
+                RedirectController::redirectTo('user/login?pwchanged');
             }else{
-                header('Location: ' . App::config('url') . 'account/index?tryagain');
+                RedirectController::redirectTo('account/index?tryagain');
             }
         }
     }
@@ -75,7 +75,7 @@ class AccountController
     // Delete user's account
     public function delete(){
         if(!Session::getInstance()->isLoggedIn() && Session::getInstance()->getData() === ''){
-            header('Location: ' . App::config('url') . 'user/login?loginpls');
+            RedirectController::redirectTo('user/login?loginpls');
         }else{
             // Get user's data from Session
             $user = Session::getInstance()->getData();
@@ -93,7 +93,7 @@ class AccountController
             Cookie::getInstance()->logout();
 
             // Redirect to home page
-            header('Location: ' . App::config('url') . '?accdeleted');
+            RedirectController::redirectTo('?accdeleted');
         }
     }
 
