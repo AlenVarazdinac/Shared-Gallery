@@ -31,7 +31,7 @@
 
     <div class="row d-flex justify-content-center align-items-center" style="height: 50vh;">
 
-        <form action="<?php echo App::config('url');?>user/authorization"
+        <form action="<?php echo Config::getInstance()->getUrl();?>user/authorization"
         method="post" class="col-12 col-md-4">
             <!-- Email -->
             <div class="form-group">
@@ -60,7 +60,7 @@
             <button type="submit" class="btn btn-primary mt-3">Login</button>
 
             <!-- Link to register -->
-            <p class="mt-4">Don't have an account? <a href="<?php echo App::config('url');?>user/register">Register</a></p>
+            <p class="mt-4">Don't have an account? <a href="<?php echo Config::getInstance()->getUrl();?>user/register">Register</a></p>
         </form>
     </div>
 </div>

@@ -8,6 +8,7 @@ class Config {
     private $dbName;
     private $dbUser;
     private $dbPw;
+    private static $instance;
 
     function __construct(){
         $this->setUrl();
@@ -64,5 +65,12 @@ class Config {
 
     public function setDbPw($dbPw = ''){
         $this->dbPw = empty($dbPw) ? App::config('db_password') : $dbPw;
+    }
+
+    public static function getInstance(){
+        if(is_null(self::$instance)){
+            self::$instance = new self();
+        }
+        return self::$instance;
     }
 }

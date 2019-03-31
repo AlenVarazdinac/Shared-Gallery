@@ -37,7 +37,7 @@
 
     <!-- Image upload -->
     <div class="row mt-5 d-flex justify-content-center">
-        <form action="<?php echo App::config('url');?>gallery/upload" method="post" enctype="multipart/form-data">
+        <form action="<?php echo Config::getInstance()->getUrl();?>gallery/upload" method="post" enctype="multipart/form-data">
             <div class="input-group">
                 <div class="custom-file">
                     <input type="file" class="custom-file-input" id="fileUpload"
@@ -56,7 +56,7 @@
     <div class="row mt-5 d-flex justify-content-center">
         <?php foreach($images as $image): ?>
             <div class="card m-2" style="width: 18rem;">
-                <img src="<?php echo App::config('url') . 'public/gallery_images/' . $image['uploaded_by'] . '/gallery_' . $image['name'] . '.jpg';?>"
+                <img src="<?php echo Config::getInstance()->getUrl() . 'public/gallery_images/' . $image['uploaded_by'] . '/gallery_' . $image['name'] . '.jpg';?>"
                 class="card-img-top" style="height: 26rem;" alt="<?php echo $image['username'];?> image">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item"><?php echo $image['username'];?></li>
@@ -64,7 +64,7 @@
                 </ul>
                 <?php if($image['userid'] === Session::getInstance()->getData()['id']):?>
                 <div class="card-body">
-                    <a href="<?php echo App::config('url') . 'gallery/remove/' . $image['userid'] . '/' . $image['name'];?>" class="card-link">Remove</a>
+                    <a href="<?php echo Config::getInstance()->getUrl() . 'gallery/remove/' . $image['userid'] . '/' . $image['name'];?>" class="card-link">Remove</a>
                 </div>
                 <?php endif;?>
             </div>

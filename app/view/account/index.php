@@ -12,7 +12,7 @@
     <div class="row d-flex justify-content-center align-items-center" style="height: 50vh;">
         <!-- Change password form -->
         <div class="col-12 col-md-6">
-            <form action="<?php echo App::config('url');?>account/pwchange"
+            <form action="<?php echo Config::getInstance()->getUrl();?>account/pwchange"
             method="post">
                 <!-- Current password -->
                 <div class="form-group">
@@ -44,7 +44,7 @@
         <!-- Delete account -->
         <div class="col-12 col-md-6 d-flex flex-column align-middle justify-content-center align-items-center">
                 <p class="font-weight-bold text-uppercase mr-4">Would you like to delete your account?</p>
-                <a class="btn btn-danger" href="<?php echo App::config('url');?>account/delete">Delete</a>
+                <a class="btn btn-danger" href="<?php echo Config::getInstance()->getUrl();?>account/delete">Delete</a>
         </div>
         <!-- Delete account end -->
     </div>
