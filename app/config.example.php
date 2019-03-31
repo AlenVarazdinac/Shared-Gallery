@@ -1,8 +1,6 @@
 <?php
 
-// Usage :
-// Delete '.example' from file name
-// and enter correct values in fields below
+// Fill in values in config.php
 
 return [
     'url' => 'project_url',

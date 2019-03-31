@@ -19,6 +19,11 @@ spl_autoload_register(function($class){
     return include $classPath;
 });
 
+// Create config file from config.example file
+if(!file_exists('app/config.php')){
+    copy('app/config.example.php', 'app/config.php');
+}
+
 // Login user automatically if 'Remember me' is set
 Cookie::getInstance()->rememberMeData();
 
