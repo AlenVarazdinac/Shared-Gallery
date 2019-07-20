@@ -9,7 +9,7 @@ class UserController
     }
 
     public function authorization(){
-        $data = $this->_validateLogin($_POST);
+        $data = $this->_validateLogin(Request::post('user'));
 
         $user = new User();
         $user = $user->login($data);
@@ -25,13 +25,13 @@ class UserController
             Session::getInstance()->login($userData);
 
             // Remember me cookie
-            if($_POST['rememberMe'] == 'true'){
+            if($data['rememberMe'] == 'true'){
                 // Set cookie
                 Cookie::getInstance()->rememberMe($userData);
             }
             RedirectController::redirectTo('gallery');
         }else{
-            RedirectController::redirectTo('user/login?tryagain');
+            RedirectController::redirectTo('user/login?tryagain=true');
         }
     }
 
@@ -50,7 +50,7 @@ class UserController
     // Register user
     public function registration(){
         // Validate $_POST data
-        $data = $this->_validateRegistration($_POST);
+        $data = $this->_validateRegistration(Request::post('user'));
 
         $user = new User();
         $emails = $user->getEmails();
@@ -64,13 +64,13 @@ class UserController
 
         // If validate data is wrong redirect back to register page
         if($data === false){
-            RedirectController::redirectTo('user/register?tryagain');
+            RedirectController::redirectTo('user/register?tryagain=true');
         }else{
             // Register user
             $user->register($data);
 
             // If successfully registered, redirect user to login page
-            RedirectController::redirectTo('user/login?succreg');
+            RedirectController::redirectTo('user/login?succreg=true');
         }
 
     }

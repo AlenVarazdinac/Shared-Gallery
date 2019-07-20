@@ -5,7 +5,7 @@ class AccountController
     // Display account options
     public function index(){
         if(!Session::getInstance()->isLoggedIn()){
-            RedirectController::redirectTo('user/login?loginpls');
+            RedirectController::redirectTo('user/login?loginpls=true');
         }else{
             $view = new View();
             $view->render('account/index');
@@ -15,12 +15,13 @@ class AccountController
     // Change password
     public function pwChange(){
         // Store submitted data and validate
-        $data = $this->_validatePassword($_POST);
+        $data = $this->_validatePassword(Request::post('account'));
+
         // Store data from current user session
         $user = Session::getInstance()->getData();
 
         if($data === false){
-            RedirectController::redirectTo('account/index?tryagain');
+            RedirectController::redirectTo('account/index?tryagain=true');
         }else{
             $account = new Account();
             $getPassword = $account->getPassword($user);
@@ -34,9 +35,9 @@ class AccountController
                 Cookie::getInstance()->logout();
 
                 // Redirect to home page
-                RedirectController::redirectTo('user/login?pwchanged');
+                RedirectController::redirectTo('user/login?pwchanged=true');
             }else{
-                RedirectController::redirectTo('account/index?tryagain');
+                RedirectController::redirectTo('account/index?tryagain=true');
             }
         }
     }
@@ -75,7 +76,7 @@ class AccountController
     // Delete user's account
     public function delete(){
         if(!Session::getInstance()->isLoggedIn() && Session::getInstance()->getData() === ''){
-            RedirectController::redirectTo('user/login?loginpls');
+            RedirectController::redirectTo('user/login?loginpls=true');
         }else{
             // Get user's data from Session
             $user = Session::getInstance()->getData();
@@ -93,7 +94,7 @@ class AccountController
             Cookie::getInstance()->logout();
 
             // Redirect to home page
-            RedirectController::redirectTo('?accdeleted');
+            RedirectController::redirectTo('?accdeleted=true');
         }
     }
 

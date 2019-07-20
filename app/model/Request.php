@@ -37,4 +37,8 @@ class Request
     public static function post($key, $default=''){
         return isset($_POST[$key]) ? $_POST[$key] : $default;
     }
+
+    public static function files($key, $default=''){
+        return isset($_FILES[$key]) ? $_FILES[$key] : $default;
+    }
 }

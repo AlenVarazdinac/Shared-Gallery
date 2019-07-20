@@ -1,6 +1,6 @@
 <div class="container">
     <?php // Successful upload...
-    if(isset($_GET['succupload'])): ?>
+    if(Request::get('succupload')):?>
     <div class="row d-flex justify-content-center">
         <div class="col-12 col-md-6 align-middle alert alert-success mt-5">
             <p class="text-center">Image uploaded.</p>
@@ -9,7 +9,7 @@
     <?php endif;?>
 
     <?php // Successful delete...
-    if(isset($_GET['succdelete'])): ?>
+    if(Request::get('succdelete')):?>
     <div class="row d-flex justify-content-center">
         <div class="col-12 col-md-6 align-middle alert alert-success mt-5">
             <p class="text-center">Image deleted.</p>
@@ -18,7 +18,7 @@
     <?php endif;?>
 
     <?php // Something went wrong...
-    if(isset($_GET['tryagain'])): ?>
+    if(Request::get('tryagain')):?>
     <div class="row d-flex justify-content-center">
         <div class="col-12 col-md-6 align-middle alert alert-danger mt-5">
             <p class="text-center">Something went wrong. Try again.</p>
@@ -27,7 +27,7 @@
     <?php endif;?>
 
     <?php // Image does not exist...
-    if(isset($_GET['notexist'])): ?>
+    if(Request::get('notexist')):?>
     <div class="row d-flex justify-content-center">
         <div class="col-12 col-md-6 align-middle alert alert-danger mt-5">
             <p class="text-center">Image does not exist.</p>
@@ -41,7 +41,7 @@
             <div class="input-group">
                 <div class="custom-file">
                     <input type="file" class="custom-file-input" id="fileUpload"
-                    name="fileUpload" aria-describedby="fileUploadBtn" accept="image/png,image/jpeg">
+                    name="gallery[fileUpload]" aria-describedby="fileUploadBtn" accept="image/png,image/jpeg">
                     <label class="custom-file-label" for="fileUpload">Choose file</label>
                 </div>
                 <div class="input-group-append">

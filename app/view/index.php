@@ -1,6 +1,6 @@
 <div class="container">
     <?php // Account deleted...
-    if(isset($_GET['accdeleted'])): ?>
+    if(Request::get('accdeleted')):?>
     <div class="row d-flex justify-content-center">
         <div class="col-12 col-md-6 align-middle alert alert-success mt-5">
             <p class="text-center">Your account is successfully deleted.</p>

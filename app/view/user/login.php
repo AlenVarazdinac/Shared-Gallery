@@ -2,7 +2,7 @@
 <div class="container">
 
     <?php // You have to be logged in...
-    if(isset($_GET['loginpls'])): ?>
+    if(Request::get('loginpls')):?>
     <div class="row d-flex justify-content-center">
         <div class="col-12 col-md-6 align-middle alert alert-danger mt-5">
             <p class="text-center">Log in first.</p>
@@ -11,7 +11,7 @@
     <?php endif;?>
 
     <?php // Successfully registered...
-    if(isset($_GET['succreg'])): ?>
+    if(Request::get('succreg')):?>
     <div class="row d-flex justify-content-center">
         <div class="col-12 col-md-6 align-middle alert alert-success mt-5">
             <p class="text-center">Successfully registered. You can log in now.</p>
@@ -20,7 +20,7 @@
     <?php endif;?>
 
     <?php // Password changed...
-    if(isset($_GET['pwchanged'])): ?>
+    if(Request::get('pwchanged')):?>
     <div class="row d-flex justify-content-center">
         <div class="col-12 col-md-6 align-middle alert alert-success mt-5">
             <p class="text-center">Password changed. Log in using your new password.</p>
@@ -37,20 +37,20 @@
             <div class="form-group">
                 <label for="email">Email address</label>
                 <input type="email" class="form-control" id="email"
-                name="email" placeholder="Enter email" value="" required>
+                name="user[email]" placeholder="Enter email" value="" required>
             </div>
 
             <!-- Password -->
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" class="form-control" id="password"
-                name="password" placeholder="Password" value="" required>
+                name="user[password]" placeholder="Password" value="" required>
             </div>
 
             <!-- Remember me -->
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="true"
-                id="rememberMe" name="rememberMe">
+                id="rememberMe" name="user[rememberMe]">
                 <label class="form-check-label" for="rememberMe">
                     Remember me
                 </label>

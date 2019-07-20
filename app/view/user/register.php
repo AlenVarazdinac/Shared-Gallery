@@ -1,7 +1,7 @@
 <div class="container">
 
     <?php // Wrong input...
-    if(isset($_GET['tryagain'])): ?>
+    if(Request::get('tryagain')):?>
     <div class="row d-flex justify-content-center">
         <div class="col-12 col-md-6 align-middle alert alert-danger mt-5">
             <p class="text-center">Something went wrong, try again.</p>
@@ -17,28 +17,28 @@
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" class="form-control" id="username"
-                name="username" placeholder="Enter username" value="" required>
+                name="user[username]" placeholder="Enter username" value="" required>
             </div>
 
             <!-- Email -->
             <div class="form-group">
                 <label for="email">Email address</label>
                 <input type="email" class="form-control" id="email"
-                name="email" placeholder="Enter email" value="" required>
+                name="user[email]" placeholder="Enter email" value="" required>
             </div>
 
             <!-- Password -->
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" class="form-control" id="password"
-                name="password" placeholder="Password" value="" required>
+                name="user[password]" placeholder="Password" value="" required>
             </div>
 
             <!-- Confirm Password -->
             <div class="form-group">
                 <label for="confirmPassword">Confirm Password</label>
                 <input type="password" class="form-control" id="confirmPassword"
-                name="confirmPassword" placeholder="Password" value="" required>
+                name="user[confirmPassword]" placeholder="Password" value="" required>
             </div>
 
             <!-- Register button -->
