@@ -45,8 +45,8 @@ class GalleryController
                     $imageId = 1;
 
                     // Check if gallery folder exists for specified user
-                    if(!file_exists('public/gallery_images/' . $userData['id'])){
-                        mkdir('public/gallery_images/' . $userData['id'], 0755, true);
+                    if(!file_exists('gallery_images/' . $userData['id'])){
+                        mkdir('gallery_images/' . $userData['id'], 0755, true);
                     }
 
                     // Get latest image id
@@ -57,7 +57,7 @@ class GalleryController
 
                     // Upload new image
                     move_uploaded_file($_FILES["fileUpload"]["tmp_name"],
-                    'public/gallery_images/' . $userData['id'] . '/gallery_' . $imageId . '.jpg');
+                    'gallery_images/' . $userData['id'] . '/gallery_' . $imageId . '.jpg');
 
                     // Upload to Database
                     $gallery->dbUpload($userData['id'], $imageId);
@@ -82,8 +82,8 @@ class GalleryController
         if(!Session::getInstance()->isLoggedIn()){
             RedirectController::redirectTo('user/login?loginpls');
         }else{
-            $image = 'public/gallery_images/' . $userId . '/gallery_' . $imageName . '.jpg';
-            $directory = 'public/gallery_images/' . $userId;
+            $image = 'gallery_images/' . $userId . '/gallery_' . $imageName . '.jpg';
+            $directory = 'gallery_images/' . $userId;
 
             // Delete image if exists
             if(file_exists($image)){

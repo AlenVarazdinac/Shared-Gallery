@@ -1,0 +1,18 @@
+#<IfModule mod_rewrite.c>
+
+#Options +FollowSymLinks
+
+#RewriteEngine On
+#RewriteBase /public
+
+#DirectoryIndex index.php
+
+#RewriteRule ^public/(.*) index.php/$1 [L,R=301]
+
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+
+#RewriteRule (.*) index.php [L,E=PATH_INFO:/$1]
+
+
+#</IfModule>

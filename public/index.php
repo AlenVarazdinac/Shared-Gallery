@@ -1,7 +1,7 @@
 <?php
 
 // Define application base path
-define('BASEPATH', __DIR__ . '/');
+define('BASEPATH', dirname(__DIR__) . '/');
 
 // Enable error reporting
 error_reporting(E_ALL);
@@ -20,8 +20,8 @@ spl_autoload_register(function($class){
 });
 
 // Create config file from config.example file
-if(!file_exists('app/config.php')){
-    copy('app/config.example.php', 'app/config.php');
+if(!file_exists(BASEPATH . 'app/config.php')){
+    copy(BASEPATH . 'app/config.example.php', BASEPATH . 'app/config.php');
 }
 
 // Login user automatically if 'Remember me' is set
