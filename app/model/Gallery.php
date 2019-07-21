@@ -1,13 +1,12 @@
 <?php
 
-class Gallery extends Database{
+class Gallery extends Database {
 
     public $userId;
     private $connection;
 
     function __construct(){
-        $this->connection = parent::__construct();
-        $this->connection = $this->connect();
+        $this->connection = Database::getInstance();
     }
 
     // Get images for Gallery

@@ -2,37 +2,25 @@
 
 class Database extends PDO
 {
-    static private $_instance = array();
-    private $dbConfig = array();
+    static private $instance = array();
+    public static $dbConfig = array();
 
-    function __construct(){
-        $config = new Config();
-
-        $this->dbConfig = [
+    public static function setDbConfig(Config $config){
+        self::$dbConfig = [
             'host' => $config->getHost(),
             'db_name' => $config->getDbName(),
             'db_user' => $config->getDbUser(),
             'db_password' => $config->getDbPw()
         ];
-
     }
 
-    /**
-     * Database connection
-     * @return PDO|bool
-     */
-    protected function connect(){
-        $dsn = 'mysql:host='.$this->dbConfig['host'].';dbname='.$this->dbConfig['db_name'].';charset=utf8';
-
-        try{
-            $conn = new PDO($dsn, $this->dbConfig['db_user'], $this->dbConfig['db_password']);
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-        }catch(PDOException $e){
-            return false;
+    public static function getInstance(){
+        if(!is_null(self::$instance)){
+            self::setDbConfig(new Config);
+            $dsn = 'mysql:host='.self::$dbConfig['host'].';dbname='.self::$dbConfig['db_name'].';charset=utf8';
+            self::$instance = new PDO($dsn, self::$dbConfig['db_user'], self::$dbConfig['db_password']);
         }
-
-        return $conn;
+        return self::$instance;
     }
 
 }

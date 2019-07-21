@@ -5,8 +5,7 @@ class Account extends Database{
     private $connection;
 
     function __construct(){
-        $this->connection = parent::__construct();
-        $this->connection = $this->connect();
+        $this->connection = Database::getInstance();
     }
 
     // Get users password
