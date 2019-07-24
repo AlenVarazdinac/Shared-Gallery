@@ -11,60 +11,20 @@ class Config {
     private static $instance;
 
     function __construct(){
-        $this->setUrl();
-        $this->setMode();
-        $this->setHost();
-        $this->setDbName();
-        $this->setDbUser();
-        $this->setDbPw();
+        $this->url = App::config('url');
+        $this->mode = App::config('mode');
+        $this->host = App::config('host');
+        $this->dbName = App::config('db_name');
+        $this->dbUser = App::config('db_user');
+        $this->dbPw = App::config('db_password');
     }
 
-    public function getUrl(){
-        return $this->url;
+    public function __get($propertyName){
+        return $this->$propertyName;
     }
 
-    public function setUrl($url = ''){
-        $this->url = empty($url) ? App::config('url') : $url;
-    }
-
-    public function getMode(){
-        return $this->mode;
-    }
-
-    public function setMode($mode = ''){
-        $this->mode = empty($mode) ? App::config('mode') : $mode;
-    }
-
-    public function getHost(){
-        return $this->host;
-    }
-
-    public function setHost($host = ''){
-        $this->host = empty($host) ? App::config('host') : $host;
-    }
-
-    public function getDbName(){
-        return $this->dbName;
-    }
-
-    public function setDbName($dbName = ''){
-        $this->dbName = empty($dbName) ? App::config('db_name') : $dbName;
-    }
-
-    public function getDbUser(){
-        return $this->dbUser;
-    }
-
-    public function setDbUser($dbUser = ''){
-        $this->dbUser = empty($dbUser) ? App::config('db_user') : $dbUser;
-    }
-
-    public function getDbPw(){
-        return $this->dbPw;
-    }
-
-    public function setDbPw($dbPw = ''){
-        $this->dbPw = empty($dbPw) ? App::config('db_password') : $dbPw;
+    public function __set($propertyName, $propertyValue){
+        $this->$propertyName = $propertyValue;
     }
 
     public static function getInstance(){

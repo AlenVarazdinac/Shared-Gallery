@@ -7,10 +7,10 @@ class Database extends PDO
 
     public static function setDbConfig(Config $config){
         self::$dbConfig = [
-            'host' => $config->getHost(),
-            'db_name' => $config->getDbName(),
-            'db_user' => $config->getDbUser(),
-            'db_password' => $config->getDbPw()
+            'host' => $config->host,
+            'db_name' => $config->dbName,
+            'db_user' => $config->dbUser,
+            'db_password' => $config->dbPw
         ];
     }
 
