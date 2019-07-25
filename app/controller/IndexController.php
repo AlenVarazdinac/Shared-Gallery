@@ -1,11 +1,22 @@
 <?php
 
+/**
+ * Index controller
+ */
 class IndexController
 {
-    public function index(){
+    /**
+     * Index function
+     *
+     * @return void
+     */
+    public function index()
+    {
         $view = new View();
-        $view->render('index', [
+        $view->render(
+            'index', [
             'message' => 'Hello there'
-        ]);
+            ]
+        );
     }
 }

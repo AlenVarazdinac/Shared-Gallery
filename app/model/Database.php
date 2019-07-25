@@ -1,26 +1,48 @@
 <?php
 
+/**
+ * Database class
+ */
 class Database extends PDO
 {
-    static private $instance = array();
+    static private $_instance = array();
     public static $dbConfig = array();
 
-    public static function setDbConfig(Config $config){
+    /**
+     * Set database configuration
+     *
+     * @param Config $config inject Config
+     *
+     * @return void
+     */
+    public static function setDbConfig(Config $config)
+    {
         self::$dbConfig = [
-            'host' => $config->host,
-            'db_name' => $config->dbName,
-            'db_user' => $config->dbUser,
-            'db_password' => $config->dbPw
+            'host' => $config->_host,
+            'db_name' => $config->_dbName,
+            'db_user' => $config->_dbUser,
+            'db_password' => $config->_dbPw
         ];
     }
 
-    public static function getInstance(){
-        if(!is_null(self::$instance)){
+    /**
+     * Database singleton
+     *
+     * @return Database
+     */
+    public static function getInstance()
+    {
+        if (!is_null(self::$_instance)) {
             self::setDbConfig(new Config);
-            $dsn = 'mysql:host='.self::$dbConfig['host'].';dbname='.self::$dbConfig['db_name'].';charset=utf8';
-            self::$instance = new PDO($dsn, self::$dbConfig['db_user'], self::$dbConfig['db_password']);
+
+            $dsn = 'mysql:host='.self::$dbConfig['host'].';dbname='
+            .self::$dbConfig['db_name'].';charset=utf8';
+
+            self::$_instance = new PDO(
+                $dsn, self::$dbConfig['db_user'], self::$dbConfig['db_password']
+            );
         }
-        return self::$instance;
+        return self::$_instance;
     }
 
 }

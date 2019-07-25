@@ -1,7 +1,7 @@
 <div class="container">
 
     <?php // Something went wrong...
-    if(Request::get('tryagain')):?>
+    if (Request::get('tryagain')) :?>
     <div class="row d-flex justify-content-center">
         <div class="col-12 col-md-6 align-middle alert alert-danger mt-5">
             <p class="text-center">Something went wrong. Try again.</p>

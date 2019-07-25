@@ -1,6 +1,8 @@
 <?php
 
-// Fill in values in config.php
+/**
+ * Fill in values in config.php
+ */
 
 return [
     'url' => 'project_url',

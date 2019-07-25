@@ -1,12 +1,20 @@
 <?php
 
+/**
+ * Gallery controller
+ */
 class GalleryController
 {
-    // Display gallery
-    public function index(){
-        if(!Session::getInstance()->isLoggedIn()){
+    /**
+     * Display gallery
+     *
+     * @return void
+     */
+    public function index()
+    {
+        if (!Session::getInstance()->isLoggedIn()) {
             RedirectController::redirectTo('user/login?loginpls=true');
-        }else{
+        } else {
             // Get images
             $gallery = new Gallery();
             $gallery = $gallery->showImages();
@@ -17,26 +25,31 @@ class GalleryController
         }
     }
 
-    // Upload submitted image
-    public function upload(){
+    /**
+     * Upload submitted image
+     *
+     * @return void
+     */
+    public function upload()
+    {
         $validImage = true;
-        if(!Session::getInstance()->isLoggedIn()){
+        if (!Session::getInstance()->isLoggedIn()) {
             RedirectController::redirectTo('user/login?loginpls=true');
-        }else{
+        } else {
             // Get uploaded file
             $filesData = Request::files('gallery');
             // If file is uploaded
-            if($filesData['error']['fileUpload'] == 0) {
+            if ($filesData['error']['fileUpload'] == 0) {
                 // Store file in variable
                 $file = getimagesize($filesData["tmp_name"]["fileUpload"]);
 
                 // Check if file is image (format jpeg or png)
-                if($file["mime"] != "image/jpeg" && $file["mime"] != "image/png"){
+                if ($file["mime"] != "image/jpeg" && $file["mime"] != "image/png") {
                     $validImage = false;
                 }
 
                 // Upload if image meets requirements
-                if($validImage){
+                if ($validImage) {
                     // Get current user data
                     $userData = Session::getInstance()->getData();
 
@@ -47,26 +60,28 @@ class GalleryController
                     $imageId = 1;
 
                     // Check if gallery folder exists for specified user
-                    if(!file_exists('gallery_images/' . $userData['id'])){
+                    if (!file_exists('gallery_images/' . $userData['id'])) {
                         mkdir('gallery_images/' . $userData['id'], 0755, true);
                     }
 
                     // Get latest image id
-                    if(!empty($gallery->getLastImage($userData['id']))){
+                    if (!empty($gallery->getLastImage($userData['id']))) {
                         $imageId = $gallery->getLastImage($userData['id'])['name'];
                         $imageId++;
                     }
 
                     // Upload new image
-                    move_uploaded_file($filesData["tmp_name"]["fileUpload"],
-                    'gallery_images/' . $userData['id'] . '/gallery_' . $imageId . '.jpg');
+                    move_uploaded_file(
+                        $filesData["tmp_name"]["fileUpload"],
+                        'gallery_images/'.$userData['id'].'/gallery_'.$imageId.'.jpg'
+                    );
 
                     // Upload to Database
                     $gallery->dbUpload($userData['id'], $imageId);
 
                     // Redirect back to gallery
                     RedirectController::redirectTo('gallery/index?succupload=true');
-                }else{
+                } else {
                     // Redirect back to gallery
                     RedirectController::redirectTo('gallery/index?tryagain=true');
                 }
@@ -74,34 +89,41 @@ class GalleryController
         }
     }
 
-    // Remove image
-    public function remove($data){
+    /**
+     * Remove image
+     *
+     * @param mixed $data data for removing image
+     *
+     * @return void
+     */
+    public function remove($data)
+    {
         $userId = $data[0];
         $imageName = $data[1];
 
         $gallery = new Gallery();
 
-        if(!Session::getInstance()->isLoggedIn()){
+        if (!Session::getInstance()->isLoggedIn()) {
             RedirectController::redirectTo('user/login?loginpls=true');
-        }else{
+        } else {
             $image = 'gallery_images/' . $userId . '/gallery_' . $imageName . '.jpg';
             $directory = 'gallery_images/' . $userId;
 
             // Delete image if exists
-            if(file_exists($image)){
+            if (file_exists($image)) {
                 unlink($image);
 
                 // Delete from database
                 $gallery->dbDelete($userId, $imageName);
 
                 // Delete directory where image was if directory is empty
-                if($this->isDirectoryEmpty($directory)){
+                if ($this->isDirectoryEmpty($directory)) {
                     rmdir($directory);
                 }
 
                 // Redirect back to gallery
                 RedirectController::redirectTo('gallery/index?succdelete=true');
-            }else{
+            } else {
                 RedirectController::redirectTo('gallery/index?notexist=true');
             }
         }
@@ -110,16 +132,18 @@ class GalleryController
     /**
      * Check if a directory is empty
      *
-     * @param string $dirname
+     * @param string $directory directory name
+     *
      * @return bool
      */
-    function isDirectoryEmpty($directory){
-        if(!is_dir($directory)){
+    function isDirectoryEmpty($directory)
+    {
+        if (!is_dir($directory)) {
             return false;
         }
 
-        foreach(scandir($directory) as $file){
-            if(!in_array($file, array('.', '..'))){
+        foreach (scandir($directory) as $file) {
+            if (!in_array($file, array('.', '..'))) {
                 return false;
             }
         }
@@ -127,8 +151,13 @@ class GalleryController
         return true;
     }
 
-    // Count images for Home page
-    function count(){
+    /**
+     * Count images for Home page
+     *
+     * @return int
+     */
+    function count()
+    {
         $filesCounted = 0;
 
         $gallery = new Gallery();

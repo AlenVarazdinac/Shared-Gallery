@@ -1,3 +1,4 @@
 app/config.php
 .vscode
 public/gallery_images
+vendor

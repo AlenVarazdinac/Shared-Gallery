@@ -1,21 +1,35 @@
 <?php
 
+/**
+ * User controller
+ */
 class UserController
 {
-    // Display login form
-    public function login(){
+    /**
+     * Display login form
+     *
+     * @return void
+     */
+    public function login()
+    {
         $view = new View();
         $view->render('user/login');
     }
 
-    public function authorization(){
+    /**
+     * User authorization
+     *
+     * @return void
+     */
+    public function authorization()
+    {
         $data = $this->_validateLogin(Request::post('user'));
 
         $user = new User();
         $user = $user->login($data);
 
         // Verify submitted and db passwords
-        if(password_verify($data['password'], $user['password'])){
+        if (password_verify($data['password'], $user['password'])) {
             $userData = [
                 'id' => $user['id'],
                 'username' => $user['username'],
@@ -25,30 +39,46 @@ class UserController
             Session::getInstance()->login($userData);
 
             // Remember me cookie
-            if($data['rememberMe'] == 'true'){
+            if ($data['rememberMe'] == 'true') {
                 // Set cookie
                 Cookie::getInstance()->rememberMe($userData);
             }
             RedirectController::redirectTo('gallery');
-        }else{
+        } else {
             RedirectController::redirectTo('user/login?tryagain=true');
         }
     }
 
-    public function logout(){
+    /**
+     * Logs out user
+     *
+     * @return void
+     */
+    public function logout()
+    {
         Session::getInstance()->logout();
         Cookie::getInstance()->logout();
         RedirectController::redirectTo();
     }
 
-    // Display register form
-    public function register(){
+    /**
+     * Display register form
+     *
+     * @return void
+     */
+    public function register()
+    {
         $view = new View();
         $view->render('user/register');
     }
 
-    // Register user
-    public function registration(){
+    /**
+     * Register user
+     *
+     * @return void
+     */
+    public function registration()
+    {
         // Validate $_POST data
         $data = $this->_validateRegistration(Request::post('user'));
 
@@ -56,16 +86,16 @@ class UserController
         $emails = $user->getEmails();
 
         // If given email matches with any in DB return false
-        foreach($emails as $email){
-            if($email['email'] === $data['email']){
+        foreach ($emails as $email) {
+            if ($email['email'] === $data['email']) {
                 $data = false;
             }
         }
 
         // If validate data is wrong redirect back to register page
-        if($data === false){
+        if ($data === false) {
             RedirectController::redirectTo('user/register?tryagain=true');
-        }else{
+        } else {
             // Register user
             $user->register($data);
 
@@ -77,23 +107,26 @@ class UserController
 
     /**
      * Validate login
-     * @param $data
+     *
+     * @param mixed $data data for validation
+     *
      * @return array|bool
      */
-    public function _validateLogin($data){
+    private function _validateLogin($data)
+    {
         $required = ['email', 'password'];
 
         $data = array_diff_key($data, $required);
 
         // Validate required keys
-        foreach($required as $key){
-            if(!isset($data[$key])) {
+        foreach ($required as $key) {
+            if (!isset($data[$key])) {
                 return false;
             }
 
             // Trim whitespaces then check if empty
             $data[$key] = trim((string)$data[$key]);
-            if(empty($data[$key])){
+            if (empty($data[$key])) {
                 return false;
             }
 
@@ -101,7 +134,7 @@ class UserController
         }
 
         // Check if email is valid
-        if(!filter_var($data['email'], FILTER_VALIDATE_EMAIL)){
+        if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
             return false;
         }
 
@@ -111,23 +144,26 @@ class UserController
 
     /**
      * Validate registration
-     * @param $data
+     *
+     * @param mixed $data data for validation
+     *
      * @return array|bool
      */
-    public function _validateRegistration($data){
+    private function _validateRegistration($data)
+    {
         $required = ['username', 'email', 'password', 'confirmPassword'];
 
         $data = array_diff_key($data, $required);
 
         // Validate required keys
-        foreach($required as $key){
-            if(!isset($data[$key])) {
+        foreach ($required as $key) {
+            if (!isset($data[$key])) {
                 return false;
             }
 
             // Trim whitespaces then check if empty
             $data[$key] = trim((string)$data[$key]);
-            if(empty($data[$key])){
+            if (empty($data[$key])) {
                 return false;
             }
 
@@ -135,12 +171,12 @@ class UserController
         }
 
         // Check if email is valid
-        if(!filter_var($data['email'], FILTER_VALIDATE_EMAIL)){
+        if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
             return false;
         }
 
         // Check if passwords match
-        if($data['password'] !== $data['confirmPassword']){
+        if ($data['password'] !== $data['confirmPassword']) {
             return false;
         }
 

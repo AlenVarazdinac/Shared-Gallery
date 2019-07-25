@@ -1,42 +1,77 @@
 <?php
 
+/**
+ * Deals with session stuff
+ */
 class Session
 {
-    private static $instance;
+    private static $_instance;
 
-    private function __construct(){
+    /**
+     * Start session
+     */
+    private function __construct()
+    {
         session_start();
     }
 
-    // Logs user in
-    public function login($data){
+    /**
+     * Logs user in
+     *
+     * @param mixed $data Users data
+     *
+     * @return mixed
+     */
+    public function login($data)
+    {
         $_SESSION['is_logged_in'] = true;
         $_SESSION['user'] = $data;
     }
 
-    // Gets user's data
-    public function getData(){
+    /**
+     * Gets user's data
+     *
+     * @return mixed
+     */
+    public function getData()
+    {
         $data = isset($_SESSION['user']) ? $data = $_SESSION['user'] : '';
         return $data;
     }
 
-    // Logs user out
-    public function logout(){
+    /**
+     * Logs user out
+     *
+     * @return void
+     */
+    public function logout()
+    {
         unset($_SESSION['is_logged_in']);
         unset($_SESSION['user']);
     }
 
-    // Checks if user is logged in
-    public function isLoggedIn(){
+    /**
+     * Checks if user is logged in
+     *
+     * @return boolean
+     */
+    public function isLoggedIn()
+    {
         // Check if 'is_logged_in' session variable is set
         $isLoggedIn = isset($_SESSION['is_logged_in']) ? true : false;
         return $isLoggedIn;
     }
 
-    public static function getInstance(){
-        if(is_null(self::$instance)){
-            self::$instance = new self();
+    /**
+     * Session singleton
+     *
+     * @return Session
+     */
+    public static function getInstance()
+    {
+        if (is_null(self::$_instance)) {
+            self::$_instance = new self();
         }
-        return self::$instance;
+        return self::$_instance;
     }
 }
