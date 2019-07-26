@@ -14,7 +14,7 @@ class Gallery extends Database
      */
     function __construct()
     {
-        $this->connection = Database::getInstance();
+        $this->_connection = Database::getInstance();
     }
 
     /**

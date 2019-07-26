@@ -14,7 +14,7 @@ class RedirectController
      */
     public static function redirectTo($url = '')
     {
-        $headerLink = Config::getInstance()->url;
+        $headerLink = Config::getInstance()->_url;
 
         if (!empty($url)) {
             $headerLink .= $url;

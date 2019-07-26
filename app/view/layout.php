@@ -13,9 +13,6 @@
 
     <!-- Style for images counter -->
     <style>
-        body {
-            background-color: #333333;
-        }
         #images-count-text{
             visibility: hidden;
             font-size: 2rem;
