@@ -11,7 +11,7 @@
 
 
     <div class="row d-flex justify-content-center align-items-center" style="height: 50vh;">
-        <form action="<?php echo Config::getInstance()->url;?>user/registration"
+        <form action="<?php echo Config::getInstance()->_url;?>user/registration"
         method="post" class="col-12 col-md-4">
             <!-- Username -->
             <div class="form-group">
@@ -45,7 +45,7 @@
             <button type="submit" class="btn btn-primary">Register</button>
 
             <!-- Link to login -->
-            <p class="mt-4">Already have an account? <a href="<?php echo Config::getInstance()->url;?>user/login">Login</a></p>
+            <p class="mt-4">Already have an account? <a href="<?php echo Config::getInstance()->_url;?>user/login">Login</a></p>
 
         </form>
     </div>

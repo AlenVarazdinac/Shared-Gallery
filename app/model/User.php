@@ -3,10 +3,14 @@
 /**
  * Class for user
  */
-class User extends Database{
+class User extends Database
+{
 
     private $_connection;
 
+    /**
+     * Database connection
+     */
     function __construct()
     {
         $this->_connection = Database::getInstance();

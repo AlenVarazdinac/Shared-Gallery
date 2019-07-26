@@ -1,5 +1,11 @@
 <?php
 
+require '..\app\model\Autoload.php';
+
+/**
+ * Application starting point
+ */
+
 // Define application base path
 define('BASEPATH', dirname(__DIR__) . '/');
 
@@ -11,19 +17,14 @@ ini_set('display_errors', 1);
 set_include_path(
     implode(
         PATH_SEPARATOR, array(
-        BASEPATH . 'app/model',
-        BASEPATH . 'app/controller'
+            BASEPATH . 'app/model',
+            BASEPATH . 'app/controller'
         )
     )
 );
 
 // Register autoloader to autoinclude classes when needed
-spl_autoload_register(
-    function ($class) {
-        $classPath = strtr($class, '\\', DIRECTORY_SEPARATOR) . '.php';
-        return include $classPath;
-    }
-);
+$autoloader = new Autoload();
 
 // Create config file from config.example file
 if (!file_exists(BASEPATH . 'app/config.php')) {
