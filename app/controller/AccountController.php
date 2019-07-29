@@ -109,7 +109,7 @@ class AccountController
             $account->deleteAccount($user);
 
             // Remove user's images
-            $directory = 'public/gallery_images/' . $user['id'];
+            $directory = BASEPATH . 'public/gallery_images/' . $user['id'];
             $this->deleteDirectory($directory);
 
             // Unset session
