@@ -38,6 +38,7 @@ class GalleryController
         } else {
             // Get uploaded file
             $filesData = Request::files('gallery');
+
             // If file is uploaded
             if ($filesData['error']['fileUpload'] == 0) {
                 // Store file in variable
@@ -85,6 +86,9 @@ class GalleryController
                     // Redirect back to gallery
                     RedirectController::redirectTo('gallery/index?tryagain=true');
                 }
+            } else {
+                // Redirect back to gallery
+                RedirectController::redirectTo('gallery/index?noimage=true');
             }
         }
     }

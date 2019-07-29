@@ -18,6 +18,15 @@
     <?php endif;?>
 
     <?php // Something went wrong...
+    if(Request::get('noimage')):?>
+    <div class="row d-flex justify-content-center">
+        <div class="col-12 col-md-6 align-middle alert alert-danger mt-5">
+            <p class="text-center">You have not selected image.</p>
+        </div>
+    </div>
+    <?php endif;?>
+
+    <?php // Something went wrong...
     if(Request::get('tryagain')):?>
     <div class="row d-flex justify-content-center">
         <div class="col-12 col-md-6 align-middle alert alert-danger mt-5">
@@ -41,7 +50,7 @@
             <div class="input-group">
                 <div class="custom-file">
                     <input type="file" class="custom-file-input" id="fileUpload"
-                    name="gallery[fileUpload]" aria-describedby="fileUploadBtn" accept="image/png,image/jpeg">
+                    name="gallery[fileUpload]" aria-describedby="fileUploadBtn" accept="image/png,image/jpeg" required>
                     <label class="custom-file-label" for="fileUpload">Choose file</label>
                 </div>
                 <div class="input-group-append">
